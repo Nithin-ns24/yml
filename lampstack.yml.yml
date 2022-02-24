@@ -1,0 +1,40 @@
+---
+- hosts: 169.254.2.104
+  remote_user: root
+
+  tasks:
+    - name: Installing Apache
+      apt:
+        name: httpd
+        state: installed
+
+    - name: Enabling httpd service and start the service
+      service:
+        name: httpd
+        enabled: yes
+        state: started
+
+    - name: Install MYSQL on community edition
+      apt:
+        name: 
+          - mariadb-server
+          - mariadb
+        state: latest
+
+    - name: start the MYSQL service
+      service:
+        name: mysqld
+        enabled: yes
+        state: started
+
+    - name: Installing php
+      apt:
+        name:
+          - php
+          - php-mysql
+        state: latest
+        
+    - name: copying your php file in the /var/www/html
+      copy:
+        src: /root/ansibleplaybook/index.php
+        dest: /var/www/html/index.php
